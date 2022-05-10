@@ -1,0 +1,21 @@
+#footer {
+    float: right;
+    margin-top: 20px;
+ }
+
+
+.customer_form {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.back_btn {
+    float:right;
+    margin-top:20px;
+}
+.submit_btn {
+    float: left;
+    margin-top:20px;
+}
