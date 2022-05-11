@@ -9,6 +9,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class CustomersController extends Controller
 {
+
     public function home() {
         $customers = Customers::where('removeFlag', '=', false)->orderBy('created_at','DESC')->get();
         return view('home', ['title' => "Home",'customers' => $customers->toArray()]);
@@ -21,17 +22,23 @@ class CustomersController extends Controller
     public function editForm(Request $request, $id) {
         $customer = Customers::query()->find($id);
         if (!$customer) {
-          return redirect()->route('home');
+          return abort(404);
         }
         return view('customer_form', ['customer' => $customer, 'title' => "Edit Customer"]);
     }
 
     public function save(Request $request) {
+        if($request->input('email')) {
+            if (!filter_var($request->input('email'), FILTER_VALIDATE_EMAIL)) {
+                alert()->warning('Warning','Invalid email format.');
+                return back()->withInput($request->all());
+            }
+        }
         $id = $request->get('id');
         if ($id) {
           $customer = Customers::query()->find($id);
           if (!$customer) {
-            return redirect()->route('home');
+            return abort(404);
           }
         } else {
           $customer = new Customers();
@@ -55,7 +62,7 @@ class CustomersController extends Controller
         if ($id) {
           $customer = Customers::query()->find($id);
           if (!$customer) {
-            return redirect()->route('home');
+            return abort(404);
           }
           $customer->removeFlag = true;
           $customer->save();

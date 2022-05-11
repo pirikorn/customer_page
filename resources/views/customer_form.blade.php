@@ -2,7 +2,16 @@
 @section('content')
 <div class="container">
     <div class="row" style="margin-top:20px">
-    <div class="col-md-12 text-center">{{ $title }}</div>
+        <div class="col-md-12 text-center">{{ $title }}</div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="col-md-12">
             <div class="col-md-12 customer_form">
                 <div class="col-md-6">
@@ -16,7 +25,7 @@
                             @if (isset($customer))
                             <input type="text" class="form-control" name="firstname" value="{{$customer->firstname}}" placeholder="Ex. ham">
                             @else
-                            <input type="text" class="form-control" name="firstname" placeholder="Ex. ham">
+                            <input type="text" class="form-control" name="firstname" value="{{ old('firstname') }}" placeholder="Ex. ham">
                             @endif
                         </div>
                         <div class="form-group">
@@ -24,7 +33,7 @@
                             @if (isset($customer))
                             <input type="text" class="form-control" name="lastname" value="{{$customer->lastname}}" placeholder="Ex. taro">
                             @else
-                            <input type="text" class="form-control" name="lastname" placeholder="Ex. taro">
+                            <input type="text" class="form-control" name="lastname" value="{{ old('lastname') }}" placeholder="Ex. taro">
                             @endif
                         </div>
                         <div class="form-group">
@@ -32,7 +41,7 @@
                             @if (isset($customer))
                             <input type="text" class="form-control" name="phone" value="{{$customer->phone}}" placeholder="Ex. taro">
                             @else
-                            <input type="text" class="form-control" name="phone" placeholder="Ex. 0999999999">
+                            <input type="text" class="form-control" name="phone" value="{{ old('phone') }}" placeholder="Ex. 0999999999">
                             @endif
                         </div>
                         <div class="form-group">
@@ -40,7 +49,7 @@
                             @if (isset($customer))
                             <input type="email" class="form-control" name="email" value="{{$customer->email}}" placeholder="Ex. name@example.com">
                             @else
-                            <input type="email" class="form-control" name="email" placeholder="Ex. name@example.com">
+                            <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Ex. name@example.com">
                             @endif
                         </div>
                         <div class="row">
